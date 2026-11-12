@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from 'react';
 import { ArrowRight, Camera } from 'lucide-react';
+import { RevealOnScroll } from '../motion/RevealOnScroll';
 
 export function Footer() {
   const [email, setEmail] = useState('');
@@ -18,7 +19,7 @@ export function Footer() {
   return (
     <footer className="site-footer" id="footer">
       <div className="footer-main section-shell">
-        <div className="newsletter">
+        <RevealOnScroll className="newsletter">
           <span className="eyebrow">Notes from the north</span>
           <h2>A little more <em>considered.</em></h2>
           <p>First looks, thoughtful notes, and 10% off your first order.</p>
@@ -28,24 +29,24 @@ export function Footer() {
             <button type="submit" aria-label="Sign up for the newsletter"><ArrowRight size={18} /></button>
           </form>
           <p className={`newsletter-message${(message && !validEmail) || (email && !validEmail) ? ' error' : ''}`} id="newsletter-message" aria-live="polite">{message || (email && !validEmail ? 'Please enter a valid email address.' : '')}</p>
-        </div>
-        <div className="footer-column">
+        </RevealOnScroll>
+        <RevealOnScroll className="footer-column" delay={0.08}>
           <span className="eyebrow">Visit us</span>
           <p>Soho<br />118 Spring Street<br />New York, NY 10012</p>
           <p className="footer-hours">Mon–Sat, 11–7<br />Sunday, 12–6</p>
-        </div>
-        <div className="footer-column">
+        </RevealOnScroll>
+        <RevealOnScroll className="footer-column" delay={0.16}>
           <span className="eyebrow">Here to help</span>
           <a href="mailto:hello@ateliernorth.com">Contact us</a>
           <a href="#footer">Shipping & returns</a>
           <a href="#footer">Care guide</a>
           <a href="#footer">FAQs</a>
-        </div>
-        <div className="footer-column">
+        </RevealOnScroll>
+        <RevealOnScroll className="footer-column" delay={0.24}>
           <span className="eyebrow">Follow along</span>
           <a href="https://www.instagram.com/" target="_blank" rel="noreferrer" className="social-link">Instagram <Camera size={15} /></a>
           <a href="https://www.pinterest.com/" target="_blank" rel="noreferrer">Pinterest <ArrowRight size={14} /></a>
-        </div>
+        </RevealOnScroll>
       </div>
       <div className="footer-bottom section-shell">
         <a className="wordmark footer-wordmark" href="#top">ATELIER <span>NORTH</span></a>

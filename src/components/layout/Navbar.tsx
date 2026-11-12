@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { motion, useMotionValueEvent, useReducedMotion, useScroll } from 'framer-motion';
 import { ArrowUpRight, Menu, ShoppingBag, X } from 'lucide-react';
 
 type NavbarProps = {
@@ -15,13 +16,26 @@ const links = [
 
 export function Navbar({ itemCount, onBagOpen }: NavbarProps) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(() => window.scrollY > 50);
+  const { scrollY } = useScroll();
+  const shouldReduceMotion = useReducedMotion();
+  useMotionValueEvent(scrollY, 'change', (latest) => setScrolled(latest > 50));
 
   return (
     <>
       <div className="announcement">
         Complimentary shipping on all orders over $150 <span>—</span> Thoughtfully made, always
       </div>
-      <header className="site-header">
+      <motion.header
+        className="site-header"
+        initial={false}
+        animate={{
+          backgroundColor: scrolled ? 'rgba(250, 249, 246, 0.88)' : 'rgba(250, 249, 246, 0.98)',
+          backdropFilter: scrolled ? 'blur(18px)' : 'blur(0px)',
+          borderColor: scrolled ? 'rgba(229, 227, 222, 0.65)' : 'rgba(229, 227, 222, 0)',
+        }}
+        transition={{ duration: shouldReduceMotion ? 0 : 0.35, ease: [0.22, 1, 0.36, 1] }}
+      >
         <nav className="navbar page-shell" aria-label="Main navigation">
           <a className="wordmark" href="#top" aria-label="Atelier North home">
             ATELIER <span>NORTH</span>
@@ -54,7 +68,7 @@ export function Navbar({ itemCount, onBagOpen }: NavbarProps) {
             ))}
           </div>
         )}
-      </header>
+      </motion.header>
     </>
   );
 }
